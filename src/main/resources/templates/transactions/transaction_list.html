@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>transaction history</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<div class="container transaction_list">
+    <h2>Transactions</h2>
+    <br />
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>currencyA</th>
+        </tr>
+        <th:block th:each="transaction : ${transactions}">
+            <tr>
+                <td th:text="${transaction.id}">...</td>
+                <td th:text="${transaction.currencyA}">...</td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+</body>
+</html>

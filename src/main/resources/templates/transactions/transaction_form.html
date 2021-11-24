@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--suppress HtmlFormInputWithoutLabel -->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>transaction form</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<div class="container">
+    <form method="post" th:action="@{/transaction}" th:object="${transaction}">
+        <h3>Transaction</h3>
+
+        <input type="text" placeholder="ID given by the transaction platform" id="platformId" th:field="*{platformId}"/>
+        <input type="text" placeholder="amount A" id="amountA" th:field="*{amountA}"/>
+        <input type="text" placeholder="currency A" id="currencyA" th:field="*{currencyA}"/>
+        <input type="text" placeholder="amount B" id="amountB" th:field="*{amountB}"/>
+        <input type="text" placeholder="currency B" id="currencyB" th:field="*{currencyB}"/>
+        <input type="text" placeholder="amount fee" id="amountFee" th:field="*{amountFee}"/>
+        <input type="text" placeholder="currency fee" id="currencyFee" th:field="*{currencyFee}"/>
+        <input type="text" placeholder="date of execution" id="executionDate" th:field="*{executionDate}"/>
+
+        <input type="submit" value="Submit"/>
+    </form>
+</div>
+</body>
+</html>
