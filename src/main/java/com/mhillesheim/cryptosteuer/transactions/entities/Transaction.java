@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@SuppressWarnings("unused")
 @Entity
 @Table(name = "transactions")
 public class Transaction {
@@ -37,6 +38,19 @@ public class Transaction {
     private Date executionDate;
 
     public Transaction() {}
+
+    public Transaction(long id, String platformId, TradingPlatform tradingPlatform, Currency currencyA, Currency currencyB, Currency currencyFee, BigDecimal amountA, BigDecimal amountB, BigDecimal amountFee, Date executionDate) {
+        this.id = id;
+        this.platformId = platformId;
+        this.tradingPlatform = tradingPlatform;
+        this.currencyA = currencyA;
+        this.currencyB = currencyB;
+        this.currencyFee = currencyFee;
+        this.amountA = amountA;
+        this.amountB = amountB;
+        this.amountFee = amountFee;
+        this.executionDate = executionDate;
+    }
 
     public long getId() {
         return id;
