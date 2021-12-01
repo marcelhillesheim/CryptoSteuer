@@ -39,8 +39,10 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(long id, String platformId, TradingPlatform tradingPlatform, Currency currencyA, Currency currencyB, Currency currencyFee, BigDecimal amountA, BigDecimal amountB, BigDecimal amountFee, Date executionDate) {
-        this.id = id;
+    public Transaction(String platformId, TradingPlatform tradingPlatform,
+                       Currency currencyA, Currency currencyB, Currency currencyFee,
+                       BigDecimal amountA, BigDecimal amountB, BigDecimal amountFee,
+                       Date executionDate) {
         this.platformId = platformId;
         this.tradingPlatform = tradingPlatform;
         this.currencyA = currencyA;
