@@ -25,12 +25,24 @@ public class HodlerTest  {
             |-------------------|1              // b0        consumed
                 1|--------------|               //        s1 consumed
                  |--------------------|0.5      // b1 and s2 consumed
-                           1|-------------------// b2        consumed (still holding)
+                                                // nothing left
      */
     @Test
-    public void testBasic1() {doTest("basic1");}
+    public void testBasic() {doTest("basic");}
 
-    //TODO test buyAmount rest -> no sellTransactions left
+    /*     b0
+           1|-------------------                // no sell transaction left -> still holding
+     */
+    @Test
+    public void testStillHolding() {doTest("stillHolding");}
+
+    /*     b0        s0
+           1|---------|0.5                      //        s0 consumed
+            |--------------------               // no sell transaction left -> still holding 0.5 of b0
+    */
+    @Test
+    public void testStillHoldingCarryOver() {doTest("stillHoldingCarryOver");}
+
     //TODO error if more sold than bought (date!)
 
 
@@ -90,13 +102,11 @@ public class HodlerTest  {
 
         CSVReader reader = new CSVReader(new FileReader(filePath));
         List<String[]> rows = reader.readAll();
-        rows.forEach(row -> {
-            result.add(new HodlPeriod(
-                buyTransactions.stream().filter(transaction -> transaction.getPlatformId().equals(row[0])).findFirst().orElse(null),
-                sellTransactions.stream().filter(transaction -> transaction.getPlatformId().equals(row[1])).findFirst().orElse(null),
-                new BigDecimal(row[2])
-            ));
-        });
+        rows.forEach(row -> result.add(new HodlPeriod(
+            buyTransactions.stream().filter(transaction -> transaction.getPlatformId().equals(row[0])).findFirst().orElse(null),
+            sellTransactions.stream().filter(transaction -> transaction.getPlatformId().equals(row[1])).findFirst().orElse(null),
+            new BigDecimal(row[2])
+        )));
 
         return result;
     }

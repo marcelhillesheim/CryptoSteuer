@@ -37,6 +37,8 @@ public class Hodler {
 
         HodlPeriod hodlPeriod;
 
+        //TODO error if more sold than bought (date!)
+
         while (!sellTransactions.isEmpty()) {
             // store available value of the current transactions in the queue
             if (buyAmount.compareTo(BigDecimal.ZERO) == 0) buyAmount = buyTransactions.get(0).getAmountB();
