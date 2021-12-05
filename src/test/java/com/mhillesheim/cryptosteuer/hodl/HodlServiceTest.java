@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class HodlerTest  {
+public class HodlServiceTest {
 
     /*     b0   b1   s0   b2   s1    s2
            1|---------|0.5                      //        s0 consumed
@@ -62,9 +62,8 @@ public class HodlerTest  {
 
 
         assert sellTransactions != null;
-        Hodler hodler = new Hodler(buyTransactions, sellTransactions);
-        hodler.getHodlPeriods().forEach(hodlPeriod -> System.out.println(hodlPeriod.getAmount()));
-        assertThat(hodler.getHodlPeriods()).usingRecursiveComparison().isEqualTo(expectedResult);
+        HodlService hodlService = new HodlService(null);
+        assertThat(hodlService.getHodlPeriods(buyTransactions, sellTransactions)).usingRecursiveComparison().isEqualTo(expectedResult);
     }
 
     private List<Transaction> getTransactionList(String testName, String type) throws IOException, CsvException {

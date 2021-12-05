@@ -1,17 +1,28 @@
 package com.mhillesheim.cryptosteuer.hodl;
 
+import com.mhillesheim.cryptosteuer.transactions.Currency;
 import com.mhillesheim.cryptosteuer.transactions.entities.Transaction;
+import com.mhillesheim.cryptosteuer.transactions.repositories.TransactionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public class Hodler {
+@Service
+public class HodlService {
 
-    private final List<HodlPeriod> hodlPeriods;
+    private final TransactionRepository transactionRepository;
+
+    @Autowired
+    public HodlService(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
 
     /**
-     * This class connects buy transactions with sell transactions via HodlPeriod instances
+     * This service connects buy transactions with sell transactions via HodlPeriod instances
      * It basically determines for every coin the user owned:
      * with which transaction it was bought and with which transaction it was sold based on FIFO.
      *
@@ -29,8 +40,8 @@ public class Hodler {
      *                         all transactions have to sell the same currency
      *
      */
-    public Hodler(List<Transaction> buyTransactions, List<Transaction> sellTransactions) {
-        this.hodlPeriods = new ArrayList<>();
+    public List<HodlPeriod> getHodlPeriods(List<Transaction> buyTransactions, List<Transaction> sellTransactions) {
+        List<HodlPeriod> hodlPeriods = new ArrayList<>();
 
         BigDecimal buyAmount = BigDecimal.ZERO;
         BigDecimal sellAmount = BigDecimal.ZERO;
@@ -66,9 +77,19 @@ public class Hodler {
         for (Transaction buyTransaction : buyTransactions) {
             hodlPeriods.add(new HodlPeriod(buyTransaction, null, buyTransaction.getAmountB()));
         }
+
+        return hodlPeriods;
     }
 
-    public List<HodlPeriod> getHodlPeriods() {
-        return hodlPeriods;
+    public List<HodlPeriod> getHodlPeriods(Currency currency) {
+        //TODO sort via SQL -> FIRST: change java.util.Date to java.time
+        List<Transaction> buyTransactions = transactionRepository.findByCurrencyB(currency);
+        List<Transaction> sellTransactions = transactionRepository.findByCurrencyA(currency);
+
+        Comparator<Transaction> comparator = Comparator.comparing(Transaction::getExecutionDate);
+        buyTransactions.sort(comparator);
+        sellTransactions.sort(comparator);
+
+        return getHodlPeriods(buyTransactions, sellTransactions);
     }
 }
