@@ -3,9 +3,10 @@ package com.mhillesheim.cryptosteuer.transactions.entities;
 import com.mhillesheim.cryptosteuer.transactions.Currency;
 import com.mhillesheim.cryptosteuer.transactions.TradingPlatform;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,14 +36,14 @@ public class Transaction {
 
     //TODO add hours and minute
     @DateTimeFormat(pattern = "dd.MM.yyyy")
-    private Date executionDate;
+    private LocalDateTime executionDate;
 
     public Transaction() {}
 
-    public Transaction(String platformId, TradingPlatform tradingPlatform,
+    public Transaction(@Nullable String platformId, TradingPlatform tradingPlatform,
                        Currency currencyA, Currency currencyB, Currency currencyFee,
                        BigDecimal amountA, BigDecimal amountB, BigDecimal amountFee,
-                       Date executionDate) {
+                       LocalDateTime executionDate) {
         this.platformId = platformId;
         this.tradingPlatform = tradingPlatform;
         this.currencyA = currencyA;
@@ -126,11 +127,11 @@ public class Transaction {
         this.amountFee = amountFee;
     }
 
-    public Date getExecutionDate() {
+    public LocalDateTime getExecutionDate() {
         return executionDate;
     }
 
-    public void setExecutionDate(Date executionDate) {
+    public void setExecutionDate(LocalDateTime executionDate) {
         this.executionDate = executionDate;
     }
 

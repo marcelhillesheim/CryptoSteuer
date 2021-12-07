@@ -1,6 +1,7 @@
 package com.mhillesheim.cryptosteuer.hodl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mhillesheim.cryptosteuer.transactions.entities.Transaction;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static com.mhillesheim.cryptosteuer.transactions.Currency.BITCOIN;
 import static com.mhillesheim.cryptosteuer.transactions.Currency.EURO;
@@ -33,14 +34,20 @@ public class HodlApiTest {
     // the transactions should be sorted by Date for the hodl algorithm
     @Test
     public void testHodlApi() throws Exception {
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-        ObjectMapper objectMapper = new ObjectMapper();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
         // transactions out of order -> has to be retrieved sorted for the HodlService
         Transaction[] transactions = {
-                new Transaction("b0", BINANCE, EURO, BITCOIN, EURO, BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO, dateFormat.parse("1.1.2000")),
-                new Transaction("b2", BINANCE, EURO, BITCOIN, EURO, BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO, dateFormat.parse("1.3.2000")),
-                new Transaction("b1", BINANCE, EURO, BITCOIN, EURO, BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO, dateFormat.parse("1.2.2000"))
+                new Transaction("b0", BINANCE, EURO, BITCOIN, EURO,
+                        BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO,
+                        LocalDateTime.parse("01-01-2000 00:00:00", formatter)),
+                new Transaction("b2", BINANCE, EURO, BITCOIN, EURO,
+                        BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO,
+                        LocalDateTime.parse("01-03-2000 00:00:00", formatter)),
+                new Transaction("b1", BINANCE, EURO, BITCOIN, EURO,
+                        BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO,
+                        LocalDateTime.parse("01-02-2000 00:00:00", formatter))
         };
 
         for (Transaction transaction : transactions) {

@@ -68,6 +68,12 @@
             <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
+        <!--	Java 8 Date/time	-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

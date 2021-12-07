@@ -4,7 +4,7 @@ import com.mhillesheim.cryptosteuer.transactions.entities.Transaction;
 import io.micrometer.core.lang.Nullable;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @SuppressWarnings("unused")
 public class HodlPeriod {
@@ -20,11 +20,11 @@ public class HodlPeriod {
         this.amount = amount;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startTransaction.getExecutionDate();
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
             return endTransaction != null ? endTransaction.getExecutionDate() : null;
     }
     

@@ -10,9 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +66,7 @@ public class HodlServiceTest {
     }
 
     private List<Transaction> getTransactionList(String testName, String type) throws IOException, CsvException {
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
         List<Transaction> transactionList = new ArrayList<>();
 
@@ -77,16 +76,12 @@ public class HodlServiceTest {
         CSVReader reader = new CSVReader(new FileReader(filePath));
         List<String[]> rows = reader.readAll();
         rows.forEach(row -> {
-            try {
-                transactionList.add(new Transaction(
-                        row[0], TradingPlatform.valueOf(row[1]),
-                        Currency.valueOf(row[2]), Currency.valueOf(row[3]), Currency.valueOf(row[4]),
-                        new BigDecimal(row[5]), new BigDecimal(row[6]), new BigDecimal(row[7]),
-                        dateFormat.parse(row[8]))
-                );
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            transactionList.add(new Transaction(
+                    row[0], TradingPlatform.valueOf(row[1]),
+                    Currency.valueOf(row[2]), Currency.valueOf(row[3]), Currency.valueOf(row[4]),
+                    new BigDecimal(row[5]), new BigDecimal(row[6]), new BigDecimal(row[7]),
+                    LocalDateTime.parse(row[8],formatter))
+            );
         });
 
         return transactionList;
