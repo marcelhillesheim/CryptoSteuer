@@ -5,13 +5,10 @@ import com.mhillesheim.cryptosteuer.transactions.TradingPlatform;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 @SuppressWarnings("unused")
 @Entity
@@ -26,16 +23,20 @@ public class Transaction {
 
     private TradingPlatform tradingPlatform;
 
+    @NotNull
     private Currency currencyA;
+    @NotNull
     private Currency currencyB;
     private Currency currencyFee;
 
+    @NotNull
     private BigDecimal amountA;
+    @NotNull
     private BigDecimal amountB;
     private BigDecimal amountFee;
 
-    //TODO add hours and minute
-    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm:ss")
+    @NotNull
     private LocalDateTime executionDate;
 
     public Transaction() {}

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ public class TransactionRestController {
     }
 
     @PostMapping()
-    public Transaction newTransaction(@RequestBody Transaction newTransaction) {
+    public Transaction newTransaction(@RequestBody @Valid Transaction newTransaction) {
         return transactionRepository.save(newTransaction);
     }
 }
