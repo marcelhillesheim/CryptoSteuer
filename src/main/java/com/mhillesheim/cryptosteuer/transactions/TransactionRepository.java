@@ -1,7 +1,5 @@
-package com.mhillesheim.cryptosteuer.transactions.repositories;
+package com.mhillesheim.cryptosteuer.transactions;
 
-import com.mhillesheim.cryptosteuer.transactions.Currency;
-import com.mhillesheim.cryptosteuer.transactions.entities.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

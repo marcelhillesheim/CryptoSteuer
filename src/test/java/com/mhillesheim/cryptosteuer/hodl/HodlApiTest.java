@@ -2,7 +2,7 @@ package com.mhillesheim.cryptosteuer.hodl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.mhillesheim.cryptosteuer.transactions.entities.Transaction;
+import com.mhillesheim.cryptosteuer.transactions.Transaction;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

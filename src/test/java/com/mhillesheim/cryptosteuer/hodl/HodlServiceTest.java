@@ -2,7 +2,7 @@ package com.mhillesheim.cryptosteuer.hodl;
 
 import com.mhillesheim.cryptosteuer.transactions.Currency;
 import com.mhillesheim.cryptosteuer.transactions.TradingPlatform;
-import com.mhillesheim.cryptosteuer.transactions.entities.Transaction;
+import com.mhillesheim.cryptosteuer.transactions.Transaction;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import org.junit.jupiter.api.Test;
@@ -75,14 +75,12 @@ public class HodlServiceTest {
 
         CSVReader reader = new CSVReader(new FileReader(filePath));
         List<String[]> rows = reader.readAll();
-        rows.forEach(row -> {
-            transactionList.add(new Transaction(
-                    row[0], TradingPlatform.valueOf(row[1]),
-                    Currency.valueOf(row[2]), Currency.valueOf(row[3]), Currency.valueOf(row[4]),
-                    new BigDecimal(row[5]), new BigDecimal(row[6]), new BigDecimal(row[7]),
-                    LocalDateTime.parse(row[8],formatter))
-            );
-        });
+        rows.forEach(row -> transactionList.add(new Transaction(
+                row[0], TradingPlatform.valueOf(row[1]),
+                Currency.valueOf(row[2]), Currency.valueOf(row[3]), Currency.valueOf(row[4]),
+                new BigDecimal(row[5]), new BigDecimal(row[6]), new BigDecimal(row[7]),
+                LocalDateTime.parse(row[8],formatter))
+        ));
 
         return transactionList;
     }

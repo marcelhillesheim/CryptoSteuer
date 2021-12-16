@@ -1,7 +1,5 @@
-package com.mhillesheim.cryptosteuer.transactions.controller;
+package com.mhillesheim.cryptosteuer.transactions;
 
-import com.mhillesheim.cryptosteuer.transactions.entities.Transaction;
-import com.mhillesheim.cryptosteuer.transactions.repositories.TransactionRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
 package com.mhillesheim.cryptosteuer.hodl;
 
 import com.mhillesheim.cryptosteuer.transactions.Currency;
-import com.mhillesheim.cryptosteuer.transactions.entities.Transaction;
-import com.mhillesheim.cryptosteuer.transactions.repositories.TransactionRepository;
+import com.mhillesheim.cryptosteuer.transactions.Transaction;
+import com.mhillesheim.cryptosteuer.transactions.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

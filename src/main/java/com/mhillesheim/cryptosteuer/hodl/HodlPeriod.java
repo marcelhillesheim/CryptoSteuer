@@ -1,6 +1,6 @@
 package com.mhillesheim.cryptosteuer.hodl;
 
-import com.mhillesheim.cryptosteuer.transactions.entities.Transaction;
+import com.mhillesheim.cryptosteuer.transactions.Transaction;
 import io.micrometer.core.lang.Nullable;
 
 import java.math.BigDecimal;

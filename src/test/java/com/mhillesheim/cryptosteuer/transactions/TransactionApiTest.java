@@ -1,6 +1,5 @@
 package com.mhillesheim.cryptosteuer.transactions;
 
-import com.mhillesheim.cryptosteuer.transactions.repositories.TransactionRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

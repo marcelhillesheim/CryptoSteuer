@@ -1,7 +1,5 @@
-package com.mhillesheim.cryptosteuer.transactions.entities;
+package com.mhillesheim.cryptosteuer.transactions;
 
-import com.mhillesheim.cryptosteuer.transactions.Currency;
-import com.mhillesheim.cryptosteuer.transactions.TradingPlatform;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
