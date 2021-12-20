@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class BinanceFileProcessor implements FileProcessor {
+public class BinanceFileProcessor extends FileProcessor {
 
     @Override
     public List<Transaction> processFile(MultipartFile multipartFile) throws IOException {
@@ -81,24 +81,6 @@ public class BinanceFileProcessor implements FileProcessor {
         //noinspection ResultOfMethodCallIgnored
         file.delete();
         return transactions;
-    }
-
-
-    //TODO move to FileProcessor.class and make it abstract
-    /**
-     * @param tradingPair String consisting of two currency names/abbreviations e.g. "BTCETH" -> BTC, ETH
-     */
-    private Pair<Currency, Currency> resolveTradingPair(String tradingPair) {
-        String leftSide = "";
-        String rightSide = tradingPair;
-        for (char c : tradingPair.toCharArray()) {
-            leftSide += c;
-            rightSide = rightSide.substring(1);
-            if (Currency.has(leftSide) && Currency.has(rightSide)) {
-                return Pair.of(Currency.fromString(leftSide), Currency.fromString(rightSide));
-            }
-        }
-        throw new IllegalArgumentException("Couldn't resolve trading pair: " + leftSide);
     }
 
     @Override
