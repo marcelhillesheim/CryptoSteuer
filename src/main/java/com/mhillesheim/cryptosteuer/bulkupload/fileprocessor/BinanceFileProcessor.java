@@ -44,6 +44,9 @@ public class BinanceFileProcessor extends FileProcessor {
 
             // values read from current row
             //TODO change timezone (UTC)
+            //TODO some cells have a wrong cell type and therefore cant be read as LocalDateTime
+            // -> find an alternative method
+            row.getCell(0).setCellType(CellType.NUMERIC);
             LocalDateTime date = row.getCell(0).getLocalDateTimeCellValue();
             String tradingPair = String.valueOf(row.getCell(1));
             String tradingDirection = String.valueOf(row.getCell(2));
@@ -69,7 +72,6 @@ public class BinanceFileProcessor extends FileProcessor {
             }
             //TODO SELL
             //TODO exceptions caused by invalid inputs
-            //TODO check if transaction already exists in repository -> if already exists, dont add to transactions
             transactions.add(new Transaction(null, TradingPlatform.BINANCE,
                     currencyA, currencyB, currencyFee,
                     amountA, amountB, amountFee,
