@@ -17,6 +17,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,19 +37,18 @@ public class BinanceFileProcessor extends FileProcessor {
         //TODO generify mapping columns to constructor parameters in case column order is changed by binance
         //TODO for now order is hardcoded
 
-        //TODO validate
-
         sheet.removeRow(sheet.getRow(0));
         for (Row row : sheet) {
             if (row.getCell(0) == null) break;
             if (row.getCell(0).getCellType().equals(CellType.BLANK)) continue;
 
-            // values read from current row
-            //TODO change timezone (UTC)
-            //TODO some cells have a wrong cell type and therefore cant be read as LocalDateTime
-            // -> find an alternative method
-            row.getCell(0).setCellType(CellType.NUMERIC);
-            LocalDateTime date = row.getCell(0).getLocalDateTimeCellValue();
+            //Binance stores Date in UTC format -> changing to MEZ
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime utcDate = LocalDateTime.parse(String.valueOf(row.getCell(0)), formatter);
+            LocalDateTime date = utcDate.atZone(ZoneId.of("UTC"))
+                    .withZoneSameInstant(ZoneId.of("Europe/Berlin"))
+                    .toLocalDateTime();
+
             String tradingPair = String.valueOf(row.getCell(1));
             String tradingDirection = String.valueOf(row.getCell(2));
             // price is ignored as it can be inferred by total/amount
@@ -62,15 +63,19 @@ public class BinanceFileProcessor extends FileProcessor {
             BigDecimal amountA = null;
             BigDecimal amountB = null;
 
+            Pair<Currency,Currency> currencyPair = resolveTradingPair(tradingPair);
 
             if (tradingDirection.equals("BUY")) {
-                Pair<Currency,Currency> currencyPair = resolveTradingPair(tradingPair);
                 currencyA = currencyPair.getSecond();
                 currencyB = currencyPair.getFirst();
                 amountA = total;
                 amountB = amount;
+            } else if (tradingDirection.equals("SELL")) {
+                currencyA = currencyPair.getFirst();
+                currencyB = currencyPair.getSecond();
+                amountA = amount;
+                amountB = total;
             }
-            //TODO SELL
             //TODO exceptions caused by invalid inputs
             transactions.add(new Transaction(null, TradingPlatform.BINANCE,
                     currencyA, currencyB, currencyFee,
@@ -78,7 +83,6 @@ public class BinanceFileProcessor extends FileProcessor {
                     date
                     ));
         }
-
 
         //noinspection ResultOfMethodCallIgnored
         file.delete();
