@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 
 @RestController
 @RequestMapping(path = "api/v1/bulk_upload")
@@ -20,18 +21,17 @@ public class BulkUploadRestController {
         this.bulkUploadService = bulkUploadService;
     }
 
-
-    //TODO check if @Valid is correctly implemented
     @PostMapping()
     @ResponseStatus(value = HttpStatus.OK)
     public void newBulkUpload(@RequestParam("file") MultipartFile file, @RequestParam("trading_platform") @Valid TradingPlatform tradingPlatform) {
-        //TODO handle exception
         try {
             bulkUploadService.process(file, tradingPlatform);
             //TODO add additional catches for invalid data etc.
         } catch (IOException e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "import failed", e);
+        } catch (DateTimeParseException | IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "import failed. The file processor couldn't handle the given file", e);
         }
     }
 }
