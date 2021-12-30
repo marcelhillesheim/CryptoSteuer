@@ -1,7 +1,7 @@
 package com.mhillesheim.cryptosteuer;
 
 import com.mhillesheim.cryptosteuer.transactions.Currency;
-import com.mhillesheim.cryptosteuer.transactions.TradingPlatform;
+import com.mhillesheim.cryptosteuer.tradingplatform.TradingPlatform;
 import com.mhillesheim.cryptosteuer.transactions.Transaction;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;

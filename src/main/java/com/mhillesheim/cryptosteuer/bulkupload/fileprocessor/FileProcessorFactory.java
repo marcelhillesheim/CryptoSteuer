@@ -1,6 +1,6 @@
 package com.mhillesheim.cryptosteuer.bulkupload.fileprocessor;
 
-import com.mhillesheim.cryptosteuer.transactions.TradingPlatform;
+import com.mhillesheim.cryptosteuer.tradingplatform.TradingPlatform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

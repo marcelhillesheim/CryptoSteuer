@@ -1,7 +1,7 @@
 package com.mhillesheim.cryptosteuer.bulkupload.fileprocessor;
 
 import com.mhillesheim.cryptosteuer.transactions.Currency;
-import com.mhillesheim.cryptosteuer.transactions.TradingPlatform;
+import com.mhillesheim.cryptosteuer.tradingplatform.TradingPlatform;
 import com.mhillesheim.cryptosteuer.transactions.Transaction;
 import org.springframework.data.util.Pair;
 import org.springframework.web.multipart.MultipartFile;

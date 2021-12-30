@@ -1,6 +1,6 @@
 package com.mhillesheim.cryptosteuer.bulkupload;
 
-import com.mhillesheim.cryptosteuer.transactions.TradingPlatform;
+import com.mhillesheim.cryptosteuer.tradingplatform.TradingPlatform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 @RequestMapping(path = "api/v1/bulk_upload")
 public class BulkUploadRestController {
     private final BulkUploadService bulkUploadService;

@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 
 import static com.mhillesheim.cryptosteuer.transactions.Currency.BITCOIN;
 import static com.mhillesheim.cryptosteuer.transactions.Currency.EURO;
-import static com.mhillesheim.cryptosteuer.transactions.TradingPlatform.BINANCE;
+import static com.mhillesheim.cryptosteuer.tradingplatform.TradingPlatform.BINANCE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
