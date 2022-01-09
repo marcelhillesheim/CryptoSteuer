@@ -1,7 +1,6 @@
 import Chart from "react-apexcharts";
 import { useState, useEffect } from 'react';
 import http from '../http-common';
-import PanToolIcon from '@mui/icons-material/PanTool';
 
 export default function HodlPeriodTimeLine() {
 
@@ -19,13 +18,19 @@ export default function HodlPeriodTimeLine() {
     let series = [];
 
     for(let i = 0; i < hodlPeriods.length; i++) {
+        const startDate = new Date(hodlPeriods[i]["startDate"]).getTime();
+        let endDate = new Date(hodlPeriods[i]["endDate"]).getTime();
+        if (endDate == 0) {
+            //TODO check timezone
+            endDate = new Date().getTime();
+        }
+
         let period = {
             data: [{
                 x: '',
                 y: [
-                new Date(hodlPeriods[i]["startDate"]).getTime(),
-                //TODO current date, if there is no endDate -> still holding 
-                new Date(hodlPeriods[i]["endDate"]).getTime(),
+                startDate,
+                endDate
                 ],
                 hodlPeriod: hodlPeriods[i],
                 //TODO change color based on tax relevant or not -> longer than 1 year, shorter than 1 year and still holding
@@ -52,6 +57,7 @@ export default function HodlPeriodTimeLine() {
                     download: true,
                     //TODO add refresh 
                     //TODO change icons to MUI icons
+                    //import PanToolIcon from '@mui/icons-material/PanTool';
                 }
             }
         },
@@ -67,9 +73,20 @@ export default function HodlPeriodTimeLine() {
         tooltip: {
             custom: function({series, seriesIndex, dataPointIndex, w}) {
             const hodlPeriod = w.config.series[seriesIndex].data[dataPointIndex].hodlPeriod;
+            let endDate = hodlPeriod.endDate;
+            if (endDate == null) {
+                endDate = "now";
+            }
+
+            let endCurrency = "";
+            if (hodlPeriod.endTransaction != null) {
+                endCurrency = " -> " +  hodlPeriod.endTransaction.currencyB;
+            }
+                
             return '<div class="arrow_box">' +
-                '<span>' +  hodlPeriod.startDate + ' - ' +  hodlPeriod.endDate +
-                '</span>' +
+                hodlPeriod.startDate + ' - ' +  endDate + '<br>' + 
+                hodlPeriod.startTransaction.currencyA + ' -> ' +  hodlPeriod.startTransaction.currencyB + endCurrency+ '<br>' +
+                'Amount: ' +  hodlPeriod.amount + '<br>' +  
                 '</div>'
             }
         },
