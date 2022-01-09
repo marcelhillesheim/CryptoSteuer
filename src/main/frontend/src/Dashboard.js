@@ -16,7 +16,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from './components/listItems';
-import Overview from './pages/Overview'
+import Overview from './pages/Overview';
+import Hodl from './pages/Hodl';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function Copyright(props) {
@@ -156,11 +157,11 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             
               <Routes>
                 <Route path="/" element={<Overview />} />
-                <Route path="/hodl" element={<>TODO</>} />
+                <Route path="/hodl" element={<Hodl />} />
               </Routes>
             
             <Copyright sx={{ pt: 4 }} />

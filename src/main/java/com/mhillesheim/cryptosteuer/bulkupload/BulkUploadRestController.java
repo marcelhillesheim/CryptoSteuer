@@ -29,9 +29,11 @@ public class BulkUploadRestController {
             bulkUploadService.process(file, tradingPlatform);
             //TODO add additional catches for invalid data etc.
         } catch (IOException e) {
+            e.printStackTrace();
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "import failed", e);
         } catch (DateTimeParseException | IllegalArgumentException e) {
+            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "import failed. The file processor couldn't handle the given file", e);
         }
     }
