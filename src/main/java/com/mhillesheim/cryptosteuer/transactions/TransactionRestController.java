@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/v1/transactions")
 public class TransactionRestController {
     private final TransactionRepository transactionRepository;
@@ -24,7 +25,7 @@ public class TransactionRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getTransaction(@PathVariable("id") Optional<Transaction> transactionOptional) {
-        if (!transactionOptional.isPresent() ) {
+        if (transactionOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 

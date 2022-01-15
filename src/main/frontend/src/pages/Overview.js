@@ -2,13 +2,12 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Deposits from '../components/Deposits';
-import Orders from '../components/Orders';
 import Chart from '../components/Chart';
+import TransactionTable from '../components/TransactionTable';
 
 export default function Overview() {
     return (
         <><Grid container spacing={3}>
-            {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
                 <Paper
                     sx={{
@@ -21,7 +20,6 @@ export default function Overview() {
                     <Chart />
                 </Paper>
             </Grid>
-            {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
                 <Paper
                     sx={{
@@ -34,10 +32,9 @@ export default function Overview() {
                     <Deposits />
                 </Paper>
             </Grid>
-            {/* Recent Orders */}
             <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                    <Orders />
+                    <TransactionTable />
                 </Paper>
             </Grid>
         </Grid></>
