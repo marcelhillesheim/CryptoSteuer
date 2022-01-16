@@ -31,10 +31,10 @@ public class BulkUploadRestController {
         } catch (IOException e) {
             e.printStackTrace();
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "import failed", e);
+                    HttpStatus.BAD_REQUEST, "Import failed. ", e);
         } catch (DateTimeParseException | IllegalArgumentException e) {
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "import failed. The file processor couldn't handle the given file", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Import failed. The file processor couldn't handle the given file. " + e.getMessage(), e);
         }
     }
 }
