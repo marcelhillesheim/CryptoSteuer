@@ -1,7 +1,7 @@
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Deposits from '../components/Deposits';
+import BulkUpload from '../components/BulkUpload';
 import Chart from '../components/Chart';
 import TransactionTable from '../components/TransactionTable';
 
@@ -29,7 +29,7 @@ export default function Overview() {
                         height: 240,
                     }}
                 >
-                    <Deposits />
+                    <BulkUpload />
                 </Paper>
             </Grid>
             <Grid item xs={12}>

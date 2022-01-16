@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Deposits from '../components/Deposits';
+import BulkUpload from '../components/BulkUpload';
 import Chart from "react-apexcharts";
 import {useState} from "react";
 import HodlPeriodTimeLine from '../components/HodlPeriodTimeLine';
@@ -9,7 +9,6 @@ export default function Hodl() {
 
     return (
         <><Grid container spacing={3}>
-            {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
                 <Paper
                     sx={{
@@ -22,7 +21,6 @@ export default function Hodl() {
                 <HodlPeriodTimeLine/>
                 </Paper>
             </Grid>
-            {/* Recent Deposits */}
             <Grid item xs={12} md={4} lg={3}>
                 <Paper
                     sx={{
@@ -32,7 +30,7 @@ export default function Hodl() {
                         height: 240,
                     }}
                 >
-                    <Deposits />
+                    <BulkUpload />
                 </Paper>
             </Grid>
         </Grid></>

@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 import { Button, MenuItem, InputLabel, Select, FormControl }  from '@mui/material';
 import http from '../http-common'
 import Title from './Title';
+import {useSnackbar } from 'notistack';
 
 function preventDefault(event) {
   event.preventDefault();
 }
 
+export default function BulkUpload() {
 
-
-
-export default function Deposits() {
+  const { enqueueSnackbar } = useSnackbar();
 
   const [selectedTradingPlatform, setSelectedTradingPlatform] = useState("");
   const [tradingPlatforms, setTradingPlatforms] = useState([]);
@@ -40,10 +40,16 @@ export default function Deposits() {
         headers: {
           "Content-Type": "multipart/form-data",
         }
-      }
+      } 
     )
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+    .then(res => {
+      console.log(res);
+      enqueueSnackbar("Successfully uploaded file", { variant: 'success' });
+    })
+    .catch(err => {
+      console.log(err);
+      enqueueSnackbar(err.response.data.message, { variant: 'error' });
+    });
   }
 
   return (
