@@ -11,6 +11,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findByCurrencyA(Currency currency);
     List<Transaction> findByCurrencyB(Currency currency);
 
+    List<Transaction> findByCurrencyAOrderByExecutionDateAsc(Currency currency);
+    List<Transaction> findByCurrencyBOrderByExecutionDateAsc(Currency currency);
+
     @Query(
             "SELECT t FROM Transaction t where " +
                     "t.tradingPlatform = :#{#transaction.tradingPlatform} AND " +

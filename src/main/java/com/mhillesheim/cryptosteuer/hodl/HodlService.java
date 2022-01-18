@@ -82,13 +82,8 @@ public class HodlService {
     }
 
     public List<HodlPeriod> getHodlPeriods(Currency currency) {
-        //TODO sort via SQL -> FIRST: change java.util.Date to java.time
-        List<Transaction> buyTransactions = transactionRepository.findByCurrencyB(currency);
-        List<Transaction> sellTransactions = transactionRepository.findByCurrencyA(currency);
-
-        Comparator<Transaction> comparator = Comparator.comparing(Transaction::getExecutionDate);
-        buyTransactions.sort(comparator);
-        sellTransactions.sort(comparator);
+        List<Transaction> buyTransactions = transactionRepository.findByCurrencyBOrderByExecutionDateAsc(currency);
+        List<Transaction> sellTransactions = transactionRepository.findByCurrencyAOrderByExecutionDateAsc(currency);
 
         return getHodlPeriods(buyTransactions, sellTransactions);
     }

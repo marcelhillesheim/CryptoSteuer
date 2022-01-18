@@ -41,15 +41,24 @@ public class HodlApiTest {
 
         // transactions out of order -> has to be retrieved sorted for the HodlService
         Transaction[] transactions = {
-                new Transaction("b0", BINANCE, EURO, BITCOIN, EURO,
+                new Transaction("second", BINANCE, EURO, BITCOIN, EURO,
                         BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO,
-                        LocalDateTime.parse("01-01-2000 00:00:00", formatter)),
-                new Transaction("b2", BINANCE, EURO, BITCOIN, EURO,
+                        LocalDateTime.parse("01-01-2001 01:01:02", formatter)),
+                new Transaction("hour", BINANCE, EURO, BITCOIN, EURO,
                         BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO,
-                        LocalDateTime.parse("01-03-2000 00:00:00", formatter)),
-                new Transaction("b1", BINANCE, EURO, BITCOIN, EURO,
+                        LocalDateTime.parse("01-01-2001 02:01:01", formatter)),
+                new Transaction("minute", BINANCE, EURO, BITCOIN, EURO,
                         BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO,
-                        LocalDateTime.parse("01-02-2000 00:00:00", formatter))
+                        LocalDateTime.parse("01-01-2001 01:02:01", formatter)),
+                new Transaction("month", BINANCE, EURO, BITCOIN, EURO,
+                        BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO,
+                        LocalDateTime.parse("01-02-2001 01:01:01", formatter)),
+                new Transaction("day", BINANCE, EURO, BITCOIN, EURO,
+                        BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO,
+                        LocalDateTime.parse("02-01-2001 01:01:01", formatter)),
+                new Transaction("year", BINANCE, EURO, BITCOIN, EURO,
+                        BigDecimal.valueOf(100), BigDecimal.valueOf(1), BigDecimal.ZERO,
+                        LocalDateTime.parse("01-01-2002 01:01:01", formatter))
         };
 
         for (Transaction transaction : transactions) {
@@ -67,9 +76,12 @@ public class HodlApiTest {
         )
                 //check if HodlPeriods are correctly sorted
                 //-> transaction got correctly retrieved from the repository and sorted
-                .andExpect(jsonPath("$.[0].startTransaction.platformId").value("b0"))
-                .andExpect(jsonPath("$.[1].startTransaction.platformId").value("b1"))
-                .andExpect(jsonPath("$.[2].startTransaction.platformId").value("b2"))
+                .andExpect(jsonPath("$.[0].startTransaction.platformId").value("second"))
+                .andExpect(jsonPath("$.[1].startTransaction.platformId").value("minute"))
+                .andExpect(jsonPath("$.[2].startTransaction.platformId").value("hour"))
+                .andExpect(jsonPath("$.[3].startTransaction.platformId").value("day"))
+                .andExpect(jsonPath("$.[4].startTransaction.platformId").value("month"))
+                .andExpect(jsonPath("$.[5].startTransaction.platformId").value("year"))
 
                 .andReturn();
 
